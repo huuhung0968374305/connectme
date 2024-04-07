@@ -1,0 +1,7 @@
+body {
+    font-weight: 500 !important;
+    color: rgba(0, 0, 0, 0.9) !important;
+}
+.ant-input-suffix { /* Targets Ant Design's class */
+    display: none !important;
+}
