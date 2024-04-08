@@ -1,4 +1,4 @@
 export interface UserInfo {
+  token: string
   id: string
-  username: string
 }

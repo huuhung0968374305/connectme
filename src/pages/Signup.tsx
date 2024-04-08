@@ -2,7 +2,8 @@ import '../css/Signup.css'
 
 import { FacebookFilled, GoogleOutlined } from '@ant-design/icons'
 import { Checkbox, Col, Form, FormProps, Input, Row } from 'antd'
-import { Link } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
+import { AuthService } from '../services/Auth'
 
 const responsiveLayout = {
   xs: 24,
@@ -22,8 +23,17 @@ const initialValues = {
 }
 
 function Signup() {
-  const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
+  const navigate = useNavigate()
+  const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
     console.log('Success:', values)
+    const { created, error } = await AuthService.register(values)
+    if (created) {
+      if (window.confirm('Account created')) {
+        navigate('/login')
+      }
+      return
+    }
+    alert(error)
   }
 
   const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (
@@ -64,7 +74,7 @@ function Signup() {
             <Col {...responsiveLayout}>
               <Form.Item
                 label='Your Name'
-                name='name'
+                name='username'
                 rules={[
                   { required: true, message: 'Please enter your name!' },
                   {

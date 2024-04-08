@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext, useContext, useState } from 'react'
 
 import { UserInfo } from '../interfaces'
 import {
@@ -50,3 +50,7 @@ export const AuthProvider = ({ children }: any) => {
 }
 
 export default AuthContext
+
+export const useAuth = () => {
+  return useContext(AuthContext)
+}

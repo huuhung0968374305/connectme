@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import '../../css/ChatContact.css'
 import { Search } from '../Search'
+import { Modal } from 'antd'
 
 function ChatContacts() {
   const [showScrollbar, setShowScrollbar] = useState(false)
@@ -10,12 +11,15 @@ function ChatContacts() {
   const arr = Array.from({ length: 30 })
     .fill(1)
     .map((value, index) => value + index)
+  const [isOpenSearhContactModal, setIsOpenSearhContactModal] = useState(false)
 
   return (
     <div className='min-w-[320px] flex flex-col bg-white border-r border-solid border-blue-20'>
       <div className='chat-head h-16 flex flex-row justify-between items-center px-5 py-6'>
         <div className='font-semibold text-gray-500 text-2xl'>Chats</div>
-        <div className='flex flex-row justify-center gap-4'>
+        <div
+          onClick={() => setIsOpenSearhContactModal(true)}
+          className='flex flex-row justify-center gap-4'>
           <div className='hover:text-blue-500 text-gray-500 flex flex-row items-center cursor-pointer'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
@@ -56,12 +60,12 @@ function ChatContacts() {
         <div className='contacts'>
           {arr.map((el) => {
             return (
-              <div className='custom-contact flex py-3 px-6 space-x-3 text-gray-500'>
+              <div className=' custom-contact flex py-3 px-6 space-x-3 text-gray-500'>
                 <div className='w-12 h-12 rounded-2xl'>
                   <img
                     src='https://connectme-html.themeyn.com/images/avatar/1.jpg'
                     alt=''
-                    className='rounded-md'
+                    className='min-w-[48px] rounded-md'
                   />
                 </div>
                 <div className='flex flex-col space-y-1'>
@@ -80,6 +84,16 @@ function ChatContacts() {
           })}
         </div>
       </div>
+      <Modal
+        maskClosable={false}
+        title='Basic Modal'
+        open={isOpenSearhContactModal}
+        footer={null}
+        onCancel={() => setIsOpenSearhContactModal(false)}>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </Modal>
     </div>
   )
 }

@@ -8,7 +8,7 @@ body {
 }
 
 .custom-scrollbar::-webkit-scrollbar {
-  width: 7px; /* Width of the scrollbar */
+  width: 8px; /* Width of the scrollbar */
   height: 10px; /* Height of the scrollbar thumb */
 }
 .custom-scrollbar::-webkit-scrollbar-track {
@@ -26,3 +26,8 @@ body {
 .text-overflow-ellipsis {
   text-overflow: ellipsis;
 }
+
+.ant-popover-inner {
+  border: 0.5px solid rgb(217, 217, 240);
+}
+

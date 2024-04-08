@@ -1,6 +1,10 @@
 import { FacebookFilled, GoogleOutlined } from '@ant-design/icons'
 import { Button, Col, Form, FormProps, Input, Row } from 'antd'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { AuthService } from '../services/Auth'
+import { useContext, useEffect } from 'react'
+import AuthContext from '../hooks/useAuth'
+import { setLocalStorageItem } from '../utils/localStorage'
 
 type FieldType = {
   username?: string
@@ -13,8 +17,16 @@ const initialValues = {
 }
 
 function Signin() {
-  const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
-    console.log('Success:', values)
+  const navigate = useNavigate()
+  const { login } = useContext(AuthContext)
+  const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
+    const { token, error, id } = await AuthService.login(values)
+    if (error) {
+      alert(error)
+      return
+    }
+    login({ token, id })
+    navigate('/index')
   }
 
   const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (
