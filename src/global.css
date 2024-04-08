@@ -1,7 +1,28 @@
 body {
-    font-weight: 500 !important;
-    color: rgba(0, 0, 0, 0.9) !important;
+  font-weight: 500 !important;
+  color: rgba(0, 0, 0, 0.9) !important;
 }
-.ant-input-suffix { /* Targets Ant Design's class */
-    display: none !important;
+.ant-input-suffix {
+  /* Targets Ant Design's class */
+  display: none !important;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 7px; /* Width of the scrollbar */
+  height: 10px; /* Height of the scrollbar thumb */
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Color of the scrollbar track */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #888; /* Color of the scrollbar thumb */
+  border-radius: 5px; /* Rounded corners for the thumb */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #666; /* Color of the thumb on hover */
+}
+.text-overflow-ellipsis {
+  text-overflow: ellipsis;
 }

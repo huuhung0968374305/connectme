@@ -1,0 +1,4 @@
+.custom-message-container-web {
+    max-height: calc(100vh - 72px - 88px - 96px);
+    width: calc(100vw - 320px);
+}

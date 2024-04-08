@@ -6,6 +6,7 @@ import Login from './pages/Login'
 import Protected from './pages/Protected'
 import Signup from './pages/Signup'
 import { ConfigProvider } from 'antd'
+import ChatPage from './pages/Index'
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Home />} />
+          <Route path='/index' element={<ChatPage />} />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Signup />} />
           <Route
