@@ -1,22 +1,47 @@
-import React, { useState } from 'react'
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import '../../css/ChatContact.css'
-import { Search } from '../Search'
-import { Modal } from 'antd'
 
-function ChatContacts() {
+import { Modal } from 'antd'
+import React, { useCallback, useState } from 'react'
+
+import axiosClient from '../../axios'
+import { useAuth } from '../../hooks/useAuth'
+import { useChatContact } from '../../hooks/useChatContact'
+import { ApiResponse, IUser } from '../../interfaces'
+import { IUserChatRoom } from '../../interfaces/Room.interface'
+import { Search } from '../Search'
+
+interface ChatContactsProps {
+  setCurChatRoom: React.Dispatch<React.SetStateAction<string | null>> // Function to update current chat room
+  setCurSeletedUser: React.Dispatch<React.SetStateAction<IUser | null>> // Function to update current chat room
+}
+const ChatContacts: React.FC<ChatContactsProps> = ({
+  setCurChatRoom,
+  setCurSeletedUser
+}) => {
   const [showScrollbar, setShowScrollbar] = useState(false)
+  const { user: currentUser } = useAuth()
+  const [allUsers] = useChatContact()
+  const [isOpenSearhContactModal, setIsOpenSearhContactModal] = useState(false)
 
   const handleMouseEnter = () => setShowScrollbar(true)
   const handleMouseLeave = () => setShowScrollbar(false)
-  const arr = Array.from({ length: 30 })
-    .fill(1)
-    .map((value, index) => value + index)
-  const [isOpenSearhContactModal, setIsOpenSearhContactModal] = useState(false)
 
+  const handleOpenChatRoom = useCallback(async (userClicked: IUser) => {
+    const response = await axiosClient.post<ApiResponse<IUserChatRoom[]>>(
+      '/chat/createRoom',
+      {
+        userIds: [currentUser?.id, userClicked.id]
+      }
+    )
+    setCurSeletedUser(userClicked)
+    setCurChatRoom(response.data.data[0].RoomId)
+  }, [])
   return (
-    <div className='min-w-[320px] flex flex-col bg-white border-r border-solid border-blue-20'>
+    <div className='min-w-[360px] flex flex-col bg-white border-r border-solid border-blue-20'>
       <div className='chat-head h-16 flex flex-row justify-between items-center px-5 py-6'>
-        <div className='font-semibold text-gray-500 text-2xl'>Chats</div>
+        <div className='font-semibold text-gray-600 text-2xl'>Chats</div>
         <div
           onClick={() => setIsOpenSearhContactModal(true)}
           className='flex flex-row justify-center gap-4'>
@@ -58,21 +83,24 @@ function ChatContacts() {
           </div>
         </div>
         <div className='contacts'>
-          {arr.map((el) => {
+          {allUsers?.map((user: any) => {
             return (
-              <div className=' custom-contact flex py-3 px-6 space-x-3 text-gray-500'>
+              <div
+                key={user?.id}
+                onClick={() => handleOpenChatRoom(user)}
+                className='cursor-pointer custom-contact flex py-3 px-6 space-x-3 text-gray-500'>
                 <div className='w-12 h-12 rounded-2xl'>
                   <img
-                    src='https://connectme-html.themeyn.com/images/avatar/1.jpg'
+                    src={user.imageUrl}
                     alt=''
-                    className='min-w-[48px] rounded-md'
+                    className='min-w-[48px] h-[48px] rounded-md'
                   />
                 </div>
                 <div className='flex flex-col space-y-1'>
-                  <div className='text-sm font-bold'>Jasmine thompson</div>
+                  <div className='text-sm font-bold'>{user.username}</div>
                   <div className='flex text-xs'>
                     <div className=' w-[156px] whitespace-nowrap overflow-hidden text-overflow-ellipsis'>
-                      text msgdsjakjdkalsjdkasjsasqjkjsqklj
+                      last message: not implemented yet
                     </div>
                     <div className='ml-[18px] flex text-gray-400 items-center'>
                       <p className='whitespace-nowrap'>1 day</p>

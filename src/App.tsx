@@ -1,13 +1,12 @@
+import { ConfigProvider } from 'antd'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 import PrivateRoute from './components/PrivateRoute'
-import Home from './pages/Home'
+import PublicRoute from './components/PublicRoute'
+import ChatPage from './pages/Index'
 import Login from './pages/Login'
 import Protected from './pages/Protected'
 import Signup from './pages/Signup'
-import { ConfigProvider } from 'antd'
-import ChatPage from './pages/Index'
-import PublicRoute from './components/PublicRoute'
 
 function App() {
   return (
@@ -21,9 +20,9 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route element={<PublicRoute />}>
-            <Route path='/' element={<Home />} />
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Signup />} />
+            <Route path='*' element={<Login />} />
           </Route>
           <Route
             path='/index'
@@ -33,7 +32,6 @@ function App() {
               </PrivateRoute>
             }
           />
-          <Route path='*' element={<Home />} />
         </Routes>
       </BrowserRouter>
     </ConfigProvider>

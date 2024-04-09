@@ -1,4 +1,5 @@
 import axiosClient from '../axios'
+import { IUser } from '../interfaces'
 
 export type LoginBody = {
   email: string
@@ -7,11 +8,13 @@ export type LoginBody = {
 export type SignupBody = {
   username: string
 } & LoginBody
+
 export class AuthService {
   static async login(body: LoginBody | any) {
     try {
-      const res = await axiosClient.post('/signin', body)
-      return { token: res.data.token, id: res.data.id }
+      const res = await axiosClient.post<ApiResponse<IUser>>('/signin', body)
+      console.log('res', res)
+      return { user: res.data.data }
     } catch (_error: any) {
       const {
         response: {
