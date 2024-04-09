@@ -1,5 +1,5 @@
 import axiosClient from '../axios'
-import { IUser } from '../interfaces'
+import { ApiResponse, IUser } from '../interfaces'
 
 export type LoginBody = {
   email: string

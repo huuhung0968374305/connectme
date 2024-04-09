@@ -2,7 +2,7 @@ import { SearchOutlined } from '@ant-design/icons'
 import React, { useState } from 'react'
 
 interface SearchProps {
-  onEnter: (value: string) => void
+  onEnter?: (value: string) => void
   placeholder?: string
 }
 

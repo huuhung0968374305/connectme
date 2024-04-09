@@ -7,6 +7,7 @@ import { IUser } from '../../interfaces'
 import axiosClient from '../../axios'
 import useSocket from '../../hooks/useSocket'
 import { useChatContact } from '../../hooks/useChatContact'
+import { IMessage } from '../../interfaces/Message.interface'
 
 const chatHeadIcons = [
   {
@@ -247,16 +248,19 @@ function ChatWindow({
           } bg-[#dbeafe]`}>
           {allMessages &&
             allMessages?.length > 0 &&
-            allMessages.map((messageInfo, index) => {
+            allMessages.map((messageInfo: IMessage, index: number) => {
               return (
-                <div key={index} className='flex mt-5 w-full'>
+                <div key={index} className='flex mt-1 w-full'>
                   {messageInfo.UserId !== currentUser?.id && (
                     <div className='flex min-w-[32px] h-8'>
-                      <img
-                        className='rounded-full w-8 h-8'
-                        src={curSeletedUser.imageUrl}
-                        alt=''
-                      />
+                      {messageInfo.UserId !==
+                        allMessages[index + 1]?.UserId && (
+                        <img
+                          className='rounded-full w-8 h-8'
+                          src={curSeletedUser.imageUrl}
+                          alt=''
+                        />
+                      )}
                     </div>
                   )}
                   <div className='ml-2 text-[0.83rem] max-w-full flex-grow'>

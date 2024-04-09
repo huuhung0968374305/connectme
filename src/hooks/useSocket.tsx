@@ -4,7 +4,7 @@ import io from 'socket.io-client'
 import { IMessage } from '../interfaces/Message.interface'
 import { CryptoHelper } from '../utils/Crypto'
 
-const socket = io('http://localhost:5000', {
+const socket = io('https://connectmebe-55e70cc703c6.herokuapp.com', {
   transports: ['websocket']
 })
 type IUseSocket = {

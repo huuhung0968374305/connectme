@@ -4,6 +4,7 @@ import { FacebookFilled, GoogleOutlined } from '@ant-design/icons'
 import { Checkbox, Col, Form, FormProps, Input, Row } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
 import { AuthService } from '../services/Auth'
+import { useEffect } from 'react'
 
 const responsiveLayout = {
   xs: 24,
@@ -36,6 +37,9 @@ function Signup() {
     alert(error)
   }
 
+  useEffect(() => {
+    document.title = 'Register'
+  }, [])
   const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (
     errorInfo
   ) => {

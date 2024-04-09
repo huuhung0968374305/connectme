@@ -4,7 +4,7 @@ import { IUser } from '../interfaces'
 
 const user: IUser | null = getLocalStorageItem('user')
 const axiosClient = axios.create({
-  baseURL: `http://localhost:5000/api/v1`,
+  baseURL: `https://connectmebe-55e70cc703c6.herokuapp.com/api/v1`,
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',

@@ -1,6 +1,6 @@
 import { FacebookFilled, GoogleOutlined } from '@ant-design/icons'
 import { Col, Form, FormProps, Input, Row } from 'antd'
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 import AuthContext from '../hooks/useAuth'
@@ -28,6 +28,9 @@ function Signin() {
       login(user)
     }
   }
+  useEffect(() => {
+    document.title = 'Login'
+  }, [])
 
   const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (
     errorInfo

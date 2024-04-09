@@ -2,7 +2,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import '../../css/ChatContact.css'
 
-import { Modal } from 'antd'
 import React, { useCallback, useState } from 'react'
 
 import axiosClient from '../../axios'
@@ -122,16 +121,6 @@ const ChatContacts: React.FC<ChatContactsProps> = ({
           })}
         </div>
       </div>
-      <Modal
-        maskClosable={false}
-        title='Basic Modal'
-        open={isOpenSearhContactModal}
-        footer={null}
-        onCancel={() => setIsOpenSearhContactModal(false)}>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-      </Modal>
     </div>
   )
 }

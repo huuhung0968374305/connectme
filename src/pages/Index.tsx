@@ -1,6 +1,5 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 
-import axiosClient from '../axios'
 import AppBar from '../components/chat/AppBar'
 import ChatContacts from '../components/chat/ChatContacts'
 import ChatWindow from '../components/chat/ChatWindow'
@@ -14,6 +13,9 @@ const ChatPage = () => {
   // only used in mobile mode
   const [showChatWindow, setShowChatWindow] = useState(false)
 
+  useEffect(() => {
+    document.title = 'Messages'
+  }, [])
   useLayoutEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768)

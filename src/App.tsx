@@ -5,7 +5,6 @@ import PrivateRoute from './components/PrivateRoute'
 import PublicRoute from './components/PublicRoute'
 import ChatPage from './pages/Index'
 import Login from './pages/Login'
-import Protected from './pages/Protected'
 import Signup from './pages/Signup'
 
 function App() {

@@ -10,7 +10,7 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
     return <Navigate to='/login' replace /> // Redirect to login
   }
 
-  return children
+  return children as any
 }
 
 export default PrivateRoute

@@ -19,7 +19,7 @@ export const useChatContact = () => {
           return user.id !== currentUser?.id
         })
       )
-      setUserRooms(userRoomsRes.data.data.map((room) => room.RoomId))
+      setUserRooms(userRoomsRes.data.data.map((room: any) => room.RoomId))
     } catch (error) {
       console.log('error', error)
     }
