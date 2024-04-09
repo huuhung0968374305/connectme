@@ -70,7 +70,7 @@ function Signup() {
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
           layout='vertical'>
-          <Row gutter={36}>
+          <Row gutter={24}>
             <Col {...responsiveLayout}>
               <Form.Item
                 label='Your Name'
@@ -86,7 +86,10 @@ function Signup() {
                     message: 'Name must be at least 6 characters long'
                   }
                 ]}>
-                <Input className='px-4 py-2' placeholder='yourname' />
+                <Input
+                  className='px-4 py-2 text-gray-600'
+                  placeholder='yourname'
+                />
               </Form.Item>
             </Col>
             <Col {...responsiveLayout}>
@@ -98,13 +101,13 @@ function Signup() {
                   { type: 'email', message: 'Invalid email address!' }
                 ]}>
                 <Input
-                  className='px-4 py-2'
+                  className='px-4 py-2 text-gray-600'
                   placeholder='youremail@example.com'
                 />
               </Form.Item>
             </Col>
           </Row>
-          <Row gutter={36}>
+          <Row gutter={24}>
             <Col {...responsiveLayout}>
               <Form.Item
                 label='Password'
@@ -117,7 +120,10 @@ function Signup() {
                   },
                   { max: 20, message: 'Password cannot exceed 20 characters' }
                 ]}>
-                <Input.Password className='px-4 py-2' placeholder='password' />
+                <Input.Password
+                  className='px-4 py-2 text-gray-600'
+                  placeholder='password'
+                />
               </Form.Item>
             </Col>
             <Col {...responsiveLayout}>
@@ -145,7 +151,7 @@ function Signup() {
                   })
                 ]}>
                 <Input.Password
-                  className='px-4 py-2'
+                  className='px-4 py-2 text-gray-600'
                   placeholder='password again'
                 />
               </Form.Item>
@@ -181,11 +187,11 @@ function Signup() {
           <span className='text-sm text-gray-500'>OR SIGNUP WITH</span>
         </div>
         <div className='flex items-center justify-center mt-4 space-x-4'>
-          <div className='bg-slate-200 flex rounded-lg px-10 py-2 hover:bg-blue-200 hover:text-blue-500 cursor-pointer space-x-2'>
+          <div className='bg-slate-200 flex rounded-lg px-10 py-2 justify-center items-center  max-w-[45%] hover:bg-blue-200 hover:text-blue-500 cursor-pointer space-x-2'>
             <GoogleOutlined></GoogleOutlined>
             <span>Google</span>
           </div>
-          <div className='bg-slate-200 rounded-lg px-10 py-2 flex justify-center items-center hover:bg-blue-200 hover:text-blue-500 cursor-pointer space-x-2'>
+          <div className='bg-slate-200 rounded-lg px-10 py-2 max-w-[45%] flex justify-center items-center hover:bg-blue-200 hover:text-blue-500 cursor-pointer space-x-2'>
             <FacebookFilled className='rounded-lg'></FacebookFilled>
             <span>Facebook</span>
           </div>

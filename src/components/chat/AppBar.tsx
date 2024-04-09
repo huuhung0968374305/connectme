@@ -43,7 +43,8 @@ const appBarStartIcons = [
         <path d='M6 12.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5M3 8.062C3 6.76 4.235 5.765 5.53 5.886a26.6 26.6 0 0 0 4.94 0C11.765 5.765 13 6.76 13 8.062v1.157a.93.93 0 0 1-.765.935c-.845.147-2.34.346-4.235.346s-3.39-.2-4.235-.346A.93.93 0 0 1 3 9.219zm4.542-.827a.25.25 0 0 0-.217.068l-.92.9a25 25 0 0 1-1.871-.183.25.25 0 0 0-.068.495c.55.076 1.232.149 2.02.193a.25.25 0 0 0 .189-.071l.754-.736.847 1.71a.25.25 0 0 0 .404.062l.932-.97a25 25 0 0 0 1.922-.188.25.25 0 0 0-.068-.495c-.538.074-1.207.145-1.98.189a.25.25 0 0 0-.166.076l-.754.785-.842-1.7a.25.25 0 0 0-.182-.135'></path>
         <path d='M8.5 1.866a1 1 0 1 0-1 0V3h-2A4.5 4.5 0 0 0 1 7.5V8a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1v1a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-1a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1v-.5A4.5 4.5 0 0 0 10.5 3h-2zM14 7.5V13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V7.5A3.5 3.5 0 0 1 5.5 4h5A3.5 3.5 0 0 1 14 7.5'></path>
       </svg>
-    )
+    ),
+    hideOnMobile: true
   },
   {
     key: 'person-bounding',
@@ -58,7 +59,8 @@ const appBarStartIcons = [
         <path d='M1.5 1a.5.5 0 0 0-.5.5v3a.5.5 0 0 1-1 0v-3A1.5 1.5 0 0 1 1.5 0h3a.5.5 0 0 1 0 1zM11 .5a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 1 16 1.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 1-.5-.5M.5 11a.5.5 0 0 1 .5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 1 0 1h-3A1.5 1.5 0 0 1 0 14.5v-3a.5.5 0 0 1 .5-.5m15 0a.5.5 0 0 1 .5.5v3a1.5 1.5 0 0 1-1.5 1.5h-3a.5.5 0 0 1 0-1h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 1 .5-.5'></path>
         <path d='M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0'></path>
       </svg>
-    )
+    ),
+    hideOnMobile: true
   },
   {
     key: 'bi-subtract',
@@ -71,7 +73,8 @@ const appBarStartIcons = [
         viewBox='0 0 16 16'>
         <path d='M0 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z'></path>
       </svg>
-    )
+    ),
+    hideOnMobile: true
   }
 ]
 
@@ -105,11 +108,14 @@ const appBarEndIcons = [
   }
 ]
 
-function AppBar() {
+function AppBar({ isMobile }: any) {
   const { user, logout } = useAuth()
 
   return (
-    <div className='app-bar-wrap h-[72px] max-h-[72px] border-blue-200  border-b border-solid flex flex-row'>
+    <div
+      className={`app-bar-wrap h-[72px] max-h-[72px] ${
+        isMobile && 'h-16'
+      } border-blue-200  border-b border-solid flex flex-row max-w-[100vw] overflow-x-hidden`}>
       <div className='min-w-[92px] h-full flex items-center justify-center border-r border-blue-200'>
         <div className='w-[43px] h-[40px]'>
           <svg
@@ -125,10 +131,11 @@ function AppBar() {
           </svg>
         </div>
       </div>
-      <div className='w-full flex flex-row justify-between'>
-        <div className='w-auto pl-2 flex flex-row items-center'>
+      <div className='flex flex-grow flex-row justify-between mr-5'>
+        <div className='w-auto flex flex-row items-center'>
           <ul className='flex flex-row items-center text-gray-500'>
             {appBarStartIcons.map((icon) => {
+              if (isMobile && icon.hideOnMobile) return []
               if (icon.hasBadge)
                 return (
                   <Badge
@@ -146,9 +153,14 @@ function AppBar() {
                   </Badge>
                 )
               return (
-                <li key={icon.key} className={'w-12 h-12 ml-[18px]'}>
+                <li
+                  key={icon.key}
+                  className={`
+                ${isMobile ? 'w-10 h-10 ml-[8px]' : 'w-12 h-12 ml-[18px]'}
+                `}>
                   <div
-                    className={`w-12 hover:bg-blue-200 cursor-pointer h-12 rounded-full bg-blue-100 flex justify-center items-center 
+                    className={`w-full h-full  hover:bg-blue-200 cursor-pointer  
+                    rounded-full bg-blue-100 flex justify-center items-center 
                     ${icon.selected && 'bg-blue-200'}
                   `}>
                     {icon.el}
@@ -158,16 +170,20 @@ function AppBar() {
             })}
           </ul>
         </div>
-        <div className='w-auto h-full flex items-end mr-8'>
-          <div className='w-52 h-full'>
-            <div className='w-auto pl-2 h-full flex flex-row items-center'>
-              <ul className='flex flex-row items-center mr-3'>
+        <div className='w-auto h-full flex items-end'>
+          <div className='h-full'>
+            <div className='w-auto h-full flex flex-row items-center'>
+              <ul className='flex flex-row items-center'>
                 {appBarEndIcons.map((icon) => {
                   return (
                     <li
                       key={icon.key}
-                      className=' w-12 h-12 ml-[18px] cursor-pointer'>
-                      <div className='w-12 h-12 hover:bg-blue-200 rounded-full bg-blue-100 flex justify-center items-center'>
+                      className={`${
+                        isMobile
+                          ? 'w-10 h-10  ml-[8px]'
+                          : 'w-12 h-12  ml-[18px]'
+                      }   cursor-pointer`}>
+                      <div className='w-full h-full hover:bg-blue-200 rounded-full bg-blue-100 flex justify-center items-center'>
                         {icon.el}
                       </div>
                     </li>
@@ -194,8 +210,10 @@ function AppBar() {
                       </div>
                     </>
                   }>
-                  <li className='w-12 h-12 ml-[18px]'>
-                    <div className='w-12 h-12 cursor-pointer rounded-full bg-blue-100 flex justify-center items-center'>
+                  <li className={`${isMobile ? 'ml-[8px]' : 'ml-[18px]'} `}>
+                    <div
+                      className={`
+                     cursor-pointer w-12 h-12 rounded-full bg-blue-100 flex justify-center items-center`}>
                       <img
                         className='w-full h-full rounded-full'
                         src={user?.imageUrl}

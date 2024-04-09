@@ -15,10 +15,14 @@ import { Search } from '../Search'
 interface ChatContactsProps {
   setCurChatRoom: React.Dispatch<React.SetStateAction<string | null>> // Function to update current chat room
   setCurSeletedUser: React.Dispatch<React.SetStateAction<IUser | null>> // Function to update current chat room
+  setShowChatWindow?: React.Dispatch<React.SetStateAction<boolean>> // Function to update current chat room
+  isMobile?: Boolean
 }
 const ChatContacts: React.FC<ChatContactsProps> = ({
   setCurChatRoom,
-  setCurSeletedUser
+  setCurSeletedUser,
+  setShowChatWindow,
+  isMobile
 }) => {
   const [showScrollbar, setShowScrollbar] = useState(false)
   const { user: currentUser } = useAuth()
@@ -29,6 +33,9 @@ const ChatContacts: React.FC<ChatContactsProps> = ({
   const handleMouseLeave = () => setShowScrollbar(false)
 
   const handleOpenChatRoom = useCallback(async (userClicked: IUser) => {
+    if (setShowChatWindow) {
+      setShowChatWindow(true)
+    }
     const response = await axiosClient.post<ApiResponse<IUserChatRoom[]>>(
       '/chat/createRoom',
       {
@@ -39,7 +46,10 @@ const ChatContacts: React.FC<ChatContactsProps> = ({
     setCurChatRoom(response.data.data[0].RoomId)
   }, [])
   return (
-    <div className='min-w-[360px] flex flex-col bg-white border-r border-solid border-blue-20'>
+    <div
+      className={`${
+        !isMobile ? ' min-w-[360px]' : 'w-screen'
+      } flex flex-col bg-white flex-grow border-r border-solid border-blue-20`}>
       <div className='chat-head h-16 flex flex-row justify-between items-center px-5 py-6'>
         <div className='font-semibold text-gray-600 text-2xl'>Chats</div>
         <div
@@ -99,7 +109,7 @@ const ChatContacts: React.FC<ChatContactsProps> = ({
                 <div className='flex flex-col space-y-1'>
                   <div className='text-sm font-bold'>{user.username}</div>
                   <div className='flex text-xs'>
-                    <div className=' w-[156px] whitespace-nowrap overflow-hidden text-overflow-ellipsis'>
+                    <div className='w-[156px] whitespace-nowrap overflow-hidden text-overflow-ellipsis'>
                       last message: not implemented yet
                     </div>
                     <div className='ml-[18px] flex text-gray-400 items-center'>

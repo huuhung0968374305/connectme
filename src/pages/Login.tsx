@@ -53,8 +53,8 @@ function Signin() {
         </svg>
       </div>
 
-      <div className='bg-white px-8 py-6 mx-12 shadow-md rounded-lg w-5/6 max-w-sm'>
-        <h1 className='text-2xl text-start text-gray-600 font-bold  mb-4'>
+      <div className='bg-white px-8 py-6 mx-12 shadow-md rounded-lg w-5/6 max-w-[396px]'>
+        <h1 className='text-2xl text-start text-gray-600 font-bold mb-4'>
           Login
         </h1>
         <Form
@@ -73,7 +73,7 @@ function Signin() {
                   { type: 'email', message: 'Invalid email address!' }
                 ]}>
                 <Input
-                  className='px-4 py-2'
+                  className='px-4 text-gray-600 py-2'
                   placeholder='youremail@example.com'
                 />
               </Form.Item>
@@ -92,28 +92,33 @@ function Signin() {
                   },
                   { max: 20, message: 'Password cannot exceed 20 characters' }
                 ]}>
-                <Input.Password className='px-4 py-2' placeholder='password' />
+                <Input.Password
+                  className='px-4 py-2  text-gray-600'
+                  placeholder='password'
+                />
               </Form.Item>
             </Col>
           </Row>
 
           <Form.Item>
             <button
-              className='w-full h-full px-4 py-1 text-white rounded-lg bg-blue-600 hover:bg-blue-700 text-lg'
+              className='w-full h-full px-4 py-1 text-white rounded-lg bg-blue-600 hover:bg-blue-700 text-[0.938rem]'
               type='submit'>
               Account Login
             </button>
           </Form.Item>
         </Form>
         <div className='mt-8 text-center'>
-          <span className='text-sm text-gray-500'>OR USE WITH</span>
+          <span className='text-sm text-gray-600 font-semibold text-[0.688rem]'>
+            OR USE WITH
+          </span>
         </div>
         <div className='flex items-center justify-center mt-4 space-x-4'>
-          <div className='bg-slate-200 flex rounded-lg px-10 py-2 hover:bg-blue-200 hover:text-blue-500 cursor-pointer space-x-2'>
+          <div className='bg-slate-200 flex max-w-[45%] items-center justify-center rounded-lg px-10 py-2 hover:bg-blue-200 hover:text-blue-500 cursor-pointer space-x-2'>
             <GoogleOutlined></GoogleOutlined>
             <span>Google</span>
           </div>
-          <div className='bg-slate-200 rounded-lg px-10 flex justify-center items-center py-2 hover:bg-blue-200 hover:text-blue-500 cursor-pointer space-x-2'>
+          <div className='bg-slate-200 rounded-lg px-10  max-w-[45%] flex justify-center items-center py-2 hover:bg-blue-200 hover:text-blue-500 cursor-pointer space-x-2'>
             <FacebookFilled className='rounded-lg'></FacebookFilled>
             <span>Facebook</span>
           </div>

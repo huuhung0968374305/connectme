@@ -46,7 +46,8 @@ const chatHeadIcons = [
         viewBox='0 0 16 16'>
         <path d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0'></path>
       </svg>
-    )
+    ),
+    hideOnMobile: true
   },
   {
     key: 'toggle-chat',
@@ -110,6 +111,8 @@ const chatBottomIcons = [
 interface ChatContactsProps {
   curChatRoom: string | null
   curSeletedUser: IUser
+  isMobile?: boolean
+  setShowChatWindow?: any
 }
 
 type MessageType = {
@@ -117,7 +120,12 @@ type MessageType = {
   UserId: string
 }
 
-function ChatWindow({ curChatRoom, curSeletedUser }: ChatContactsProps) {
+function ChatWindow({
+  curChatRoom,
+  curSeletedUser,
+  isMobile,
+  setShowChatWindow
+}: ChatContactsProps) {
   const [showScrollbar, setShowScrollbar] = useState(false)
   const [msgValue, setMsgValue] = useState('')
   const [_, userRooms] = useChatContact() as any
@@ -167,14 +175,30 @@ function ChatWindow({ curChatRoom, curSeletedUser }: ChatContactsProps) {
     }
   }
 
-  if (!curSeletedUser) return <></>
+  if (!curSeletedUser)
+    return <div className='flex-grow flex flex-col w-full'></div>
+
   return (
-    <div className='flex-grow flex flex-col w-full'>
+    <div className='flex-grow flex flex-col w-full overflow-x-hidden'>
       <div className='flex flex-grow flex-col w-full'>
         {/* chat head */}
         <div className='px-6 h-24 flex items-center'>
           <div className='chat-head w-full flex items-center justify-between'>
-            <div className='custom-contact flex py-3 px-6 space-x-3 text-gray-500'>
+            <div className='custom-contact flex py-3 relative px-6 space-x-3 text-gray-500'>
+              {isMobile && (
+                <div
+                  onClick={() => setShowChatWindow(false)}
+                  className='w-8 h-8 absolute top-5 left-0 rounded-full hover:bg-blue-200 flex items-center justify-center'>
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    width='16'
+                    height='16'
+                    fill='currentColor'
+                    viewBox='0 0 16 16'>
+                    <path d='M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8'></path>
+                  </svg>
+                </div>
+              )}
               <div className='w-12 h-12 rounded-2xl'>
                 <img
                   src={curSeletedUser?.imageUrl}
@@ -187,7 +211,7 @@ function ChatWindow({ curChatRoom, curSeletedUser }: ChatContactsProps) {
                   {curSeletedUser?.username}
                 </div>
                 <div className='flex text-xs'>
-                  <div className=' w-[156px] whitespace-nowrap overflow-hidden text-overflow-ellipsis'>
+                  <div className='whitespace-nowrap overflow-hidden text-overflow-ellipsis'>
                     active
                   </div>
                 </div>
@@ -196,6 +220,7 @@ function ChatWindow({ curChatRoom, curSeletedUser }: ChatContactsProps) {
 
             <ul className='flex space-x-4'>
               {chatHeadIcons.map((icon) => {
+                if (icon.hideOnMobile && isMobile) return <></>
                 return (
                   <li
                     className='w-10 h-10 hover:text-blue-500 hover:bg-blue-100 rounded-sm text-gray-600 bg-gray-200 flex items-center justify-center'
@@ -213,7 +238,11 @@ function ChatWindow({ curChatRoom, curSeletedUser }: ChatContactsProps) {
           ref={messageRef}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
-          className={`custom-message-container-web pb-8 custom-scrollbar w-full flex-grow px-6 ${
+          className={`${
+            !isMobile
+              ? 'custom-message-container-web'
+              : 'custom-message-container-mobile'
+          } pb-8 custom-scrollbar w-full flex-grow px-6 ${
             showScrollbar ? 'overflow-y-scroll' : 'overflow-hidden pr-8'
           } bg-[#dbeafe]`}>
           {allMessages &&
