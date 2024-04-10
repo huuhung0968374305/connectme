@@ -24,6 +24,7 @@
 - **Implemeneted error handling**
 - **Implemeneted protected route / public route**
 - **Implememented multiple chat rooms**
+- **Implememented search user**
 
 
 ## Deployment

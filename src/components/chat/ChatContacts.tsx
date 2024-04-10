@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import '../../css/ChatContact.css'
 
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 
 import axiosClient from '../../axios'
 import { useAuth } from '../../hooks/useAuth'
@@ -15,7 +15,7 @@ interface ChatContactsProps {
   setCurChatRoom: React.Dispatch<React.SetStateAction<string | null>> // Function to update current chat room
   setCurSeletedUser: React.Dispatch<React.SetStateAction<IUser | null>> // Function to update current chat room
   setShowChatWindow?: React.Dispatch<React.SetStateAction<boolean>> // Function to update current chat room
-  isMobile?: Boolean
+  isMobile?: boolean
 }
 const ChatContacts: React.FC<ChatContactsProps> = ({
   setCurChatRoom,
@@ -26,7 +26,12 @@ const ChatContacts: React.FC<ChatContactsProps> = ({
   const [showScrollbar, setShowScrollbar] = useState(false)
   const { user: currentUser } = useAuth()
   const [allUsers] = useChatContact()
+  const [searchUsers, setSearchUsers] = useState<IUser[] | null | any>(allUsers)
   const [isOpenSearhContactModal, setIsOpenSearhContactModal] = useState(false)
+
+  useEffect(() => {
+    setSearchUsers(allUsers)
+  }, [allUsers])
 
   const handleMouseEnter = () => setShowScrollbar(true)
   const handleMouseLeave = () => setShowScrollbar(false)
@@ -44,6 +49,14 @@ const ChatContacts: React.FC<ChatContactsProps> = ({
     setCurSeletedUser(userClicked)
     setCurChatRoom(response.data.data[0].RoomId)
   }, [])
+
+  const onInputChange = (input: string) => {
+    const filteredUsers = allUsers?.filter((singleUser: IUser | any) =>
+      singleUser.username?.toLowerCase()?.includes(input.toLowerCase())
+    )
+    setSearchUsers(filteredUsers)
+  }
+
   return (
     <div
       className={`${
@@ -88,11 +101,14 @@ const ChatContacts: React.FC<ChatContactsProps> = ({
         onMouseLeave={handleMouseLeave}>
         <div className='w-full sticky top-0 bg-white'>
           <div className='search mx-5 mb-4 overflow-hidden'>
-            <Search placeholder='Search contact / chat' />
+            <Search
+              onInputChange={onInputChange}
+              placeholder='Search contact / chat'
+            />
           </div>
         </div>
         <div className='contacts'>
-          {allUsers?.map((user: any) => {
+          {searchUsers?.map((user: any) => {
             return (
               <div
                 key={user?.id}
