@@ -1,36 +1,31 @@
-# React Boilerplate
+# Connectme-fe
+- See [https://connectme9637.netlify.app/]
 
-## Requirements
+## How to test:
+- **Step 1:** Create account
+- **Step 2:** Login
+- **Step 3:** 
+    - On the left side of screen, all users on database will be displayed, choose one of them to start texting
+    - Please use different browser for different account, or open page in incognito mode, because user info will be saved on localStorage
 
-- Node `v16.13.0`
 
-## Integration
+## Framework and language integration:
 
-- ViteJS
-- tailwindCSS
-- jest
-- prettier
-- eslint
-- husky
-- typescript
+- **typescript**: for defining variable type
+- **ViteJS**:
+- **Antd**: library for UI
+- **tailwindCSS**: quick css styling
+- **prettier**: auto format code
+- **eslint**: check possible ts error
 
-## Setup
+## Features
+- **Implemeneted user authentication**: attach Access token to header on every request
+- **Implemeneted realtime messaging**
+- **Implemeneted error handling**
+- **Implemeneted protected route / public route**
+- **Implememented multiple chat rooms**
 
-Install dependencies:
 
-```bash
-npm i
-```
-
-## Run development
-
-```bash
-npm run dev
-```
-
-## Test
-
-```bash
-npm test
-```
+## Deployment
+- **Deployed to Netlify**
 
